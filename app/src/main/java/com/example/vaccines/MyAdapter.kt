@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 
 class MyAdapter(val vaccinesList: ArrayList<VaccineModel>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
@@ -17,8 +18,22 @@ class MyAdapter(val vaccinesList: ArrayList<VaccineModel>) : RecyclerView.Adapte
             vaccineImage = itemView.findViewById(R.id.imageView)
             vaccineTitle = itemView.findViewById(R.id.text1)
 
-            itemView.setOnClickListener() {
-                Toast.makeText(itemView.context, "You choose: ${vaccinesList[adapterPosition].name}", Toast.LENGTH_LONG).show()
+            itemView.setOnClickListener {
+                val vaccine = vaccinesList[adapterPosition]
+                val fragment = VaccineDetailsFragment.newInstance(vaccine.name, vaccine.img, vaccine.description)
+
+                val fragmentManager = itemView.context.let { context ->
+                    if (context is FragmentActivity) {
+                        context.supportFragmentManager
+                    } else {
+                        throw IllegalStateException("The context is not an instance of FragmentActivity.")
+                    }
+                }
+
+                fragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, fragment)
+                    .addToBackStack(null)
+                    .commit()
             }
         }
     }
@@ -30,7 +45,7 @@ class MyAdapter(val vaccinesList: ArrayList<VaccineModel>) : RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.vaccineTitle.setText(vaccinesList[position].name)
+        holder.vaccineTitle.text = vaccinesList[position].name
         holder.vaccineImage.setImageResource(vaccinesList[position].img)
     }
 

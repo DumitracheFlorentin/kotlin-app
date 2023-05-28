@@ -27,13 +27,12 @@ class HomeFragment : Fragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        originalVaccinesList.add(VaccineModel("COVID-19", R.drawable.vaccine1))
-        originalVaccinesList.add(VaccineModel("Hepatitis B Vaccine", R.drawable.vaccine4))
-        originalVaccinesList.add(VaccineModel("Dummy Text", R.drawable.vaccine5))
-        originalVaccinesList.add(VaccineModel("Dummy Text", R.drawable.vaccine6))
-        originalVaccinesList.add(VaccineModel("Dummy Text", R.drawable.vaccine7))
-        originalVaccinesList.add(VaccineModel("Dummy Text", R.drawable.vaccine8))
-        originalVaccinesList.add(VaccineModel("Dummy Text", R.drawable.vaccine9))
+        originalVaccinesList.add(VaccineModel("Influenza Vaccine", R.drawable.vaccine1, "Influenza vaccine description"))
+        originalVaccinesList.add(VaccineModel("Measles, Mumps, Rubella (MMR) Vaccine", R.drawable.vaccine4, "MMR vaccine description"))
+        originalVaccinesList.add(VaccineModel("Polio Vaccine", R.drawable.vaccine5, "Polio vaccine description"))
+        originalVaccinesList.add(VaccineModel("Tetanus, Diphtheria, Pertussis (Tdap) Vaccine", R.drawable.vaccine6, "Tdap vaccine description"))
+        originalVaccinesList.add(VaccineModel("Varicella (Chickenpox) Vaccine", R.drawable.vaccine7, "Varicella vaccine description"))
+        originalVaccinesList.add(VaccineModel("Pneumococcal Vaccine", R.drawable.vaccine8, "Pneumococcal vaccine description"))
 
         // Initialize filtered list with all vaccines
         filteredVaccinesList.addAll(originalVaccinesList)
@@ -55,11 +54,10 @@ class HomeFragment : Fragment() {
         if (query.isEmpty()) {
             filteredVaccinesList.addAll(originalVaccinesList)
         } else {
-            for (vaccine in originalVaccinesList) {
-                if (vaccine.name.contains(query, ignoreCase = true)) {
-                    filteredVaccinesList.add(vaccine)
-                }
+            val filteredResults = originalVaccinesList.filter { vaccine ->
+                vaccine.name.contains(query, ignoreCase = true)
             }
+            filteredVaccinesList.addAll(filteredResults)
         }
 
         adapter.notifyDataSetChanged()
@@ -68,5 +66,6 @@ class HomeFragment : Fragment() {
             Toast.makeText(requireContext(), "No results found", Toast.LENGTH_SHORT).show()
         }
     }
+
 }
 
