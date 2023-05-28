@@ -34,13 +34,11 @@ class HomeFragment : Fragment() {
         originalVaccinesList.add(VaccineModel("Varicella (Chickenpox) Vaccine", R.drawable.vaccine7, "Varicella vaccine description"))
         originalVaccinesList.add(VaccineModel("Pneumococcal Vaccine", R.drawable.vaccine8, "Pneumococcal vaccine description"))
 
-        // Initialize filtered list with all vaccines
         filteredVaccinesList.addAll(originalVaccinesList)
 
         adapter = MyAdapter(filteredVaccinesList)
         recyclerView.adapter = adapter
 
-        // Add a listener to the search input field
         searchEditText.doAfterTextChanged { text ->
             filterVaccines(text.toString())
         }

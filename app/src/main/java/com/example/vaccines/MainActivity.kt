@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Set the default fragment when the activity is first created
         replaceFragment(HomeFragment())
     }
 

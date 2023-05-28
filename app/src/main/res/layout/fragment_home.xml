@@ -3,9 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <!-- Add any desired UI components or layout structure for the HomeFragment here -->
-
     <EditText
         android:id="@+id/searchEditText"
         android:layout_width="match_parent"
